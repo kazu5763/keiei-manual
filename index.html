@@ -8,4 +8,134 @@
   <title>事業マニュアル</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: -apple-system,
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f3f4f6; }
+    header { background: white; border-bottom: 1px solid #e5e7eb; padding: 1.2rem 1.5rem; }
+    .header-content { max-width: 80rem; margin: 0 auto; }
+    h1 { font-size: 1.5rem; color: #0f1729; margin-top: 0.5rem; }
+    .container { max-width: 80rem; margin: 0 auto; padding: 1.5rem; display: grid; grid-template-columns: 160px 1fr; gap: 1rem; }
+    .sidebar { position: sticky; top: 5rem; }
+    .category-btn { width: 100%; padding: 0.6rem 0.75rem; background: white; border: 1px solid #e5e7eb; border-radius: 0.5rem; cursor: pointer; font-weight: bold; font-size: 0.7rem; margin-bottom: 0.5rem; }
+    .item-btn { width: 100%; padding: 0.5rem 0.75rem; background: white; border: none; border-bottom: 1px solid #e5e7eb; cursor: pointer; font-size: 0.65rem; text-align: left; }
+    .item-btn.active { background: #f0f4f8; color: #2d5a8c; font-weight: 600; }
+    .content { background: white; border-radius: 0.5rem; padding: 1.2rem; }
+    .header-card { border: 4px solid #2d5a8c; padding: 0.9rem 1.2rem; margin-bottom: 0.6rem; }
+    textarea { width: 100%; padding: 0.75rem; border: 1px solid #d1d5db; border-radius: 0.5rem; font-size: 0.8rem; font-family: inherit; height: 5rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <p style="font-size: 0.65rem; color: #9ca3af; margin-bottom: 0.2rem;">BUSINESS STRATEGY</p>
+    <h1>事業マニュアル</h1>
+  </header>
+
+  <div class="container">
+    <div class="sidebar" id="sidebar"></div>
+    <div id="content"></div>
+  </div>
+
+  <script>
+    const strategicItems = {
+      business: {
+        title: '事業成長戦略',
+        items: [
+          { id: 1, title: '目的', description: 'ビジネスの根本的な目的と達成すべき成果を定義', guidance: ['事業が解決する問題・顧客課題を明確化', '3-5年での具体的な事業目標（売上、顧客数など）を数値化', 'ステークホルダーの期待値とのアラインメント', 'ビジョン・ミッション・バリューの一貫性を確認'], effects: { shortTerm: '意思決定の一貫性向上、戦略迷走の防止', midTerm: '組織全体の目的意識統一、施策の優先順位明確化', longTerm: '組織アイデンティティ確立、ステークホルダー信頼構築', kpi: ['目標達成率（年単位）', 'ビジョン理解度（組織内）'] } },
+          { id: 2, title: '現状分析', description: '市場環境、経営状況、強み・弱みの分析', guidance: ['SWOT分析 + 外部環境スキャン（PEST分析）を実施', '過去3年の財務・事業指標トレンド分析', '組織内の能力・リソースの棚卸し', '業界内でのポジション認識と競争力評価'], effects: { shortTerm: '現状把握の正確性向上、見落とし機会の発見', midTerm: '戦略立案の精度向上、リスク予防', longTerm: '持続的な競争優位性の構築', kpi: ['市場シェア推移', 'ROE/ROA', '業界平均との差分'] } },
+          { id: 3, title: '顧客分析', description: '顧客セグメント、ニーズ、購買行動の深掘り', guidance: ['セグメンテーション（デモ・サイコグラフィック・行動別）', '顧客ジャーニーマップの作成と痛点の抽出', 'LTV・CAC分析による採算性評価', 'NPS・顧客満足度データの定期取得'], effects: { shortTerm: '顧客ニーズの正確な理解、マーケティング精度向上', midTerm: 'セグメント別施策の最適化、顧客獲得コスト削減', longTerm: 'ロイヤルカスタマー育成、リテンション率向上', kpi: ['セグメント別LTV', 'チャーンレート', 'NPS'] } },
+          { id: 4, title: '競争戦略', description: '競合分析、ポジショニング、差別化要因', guidance: ['主要競合3-5社の詳細分析（プロダクト・価格・流通・マーケティング）', 'ポジショニングマップ作成（2軸）', '自社の差別化軸の明確化と持続可能性確認', '競合優位性の定期モニタリング体制構築'], effects: { shortTerm: '競合対比での自社強みの明確化', midTerm: 'ユニークなポジショニング確立、価格競争回避', longTerm: 'ブランド価値向上、市場領導力確保', kpi: ['市場シェア対競合', 'ブランド認知度', 'プレミアム価格維持率'] } },
+          { id: 5, title: '価値提案', description: '顧客への提供価値と価値ポジショニング', guidance: ['Value Proposition Canvasで価値 = ベネフィット - 代償を数値化', 'ターゲット顧客にとっての最重要価値を3つに絞り込み', '価値実現までのロードマップと実行責任の明確化', '価値検証サイクルの確立（定期レビュー、改善）'], effects: { shortTerm: 'マーケティングメッセージの一貫性向上', midTerm: '顧客獲得効率の向上、成約率・契約金額の増加', longTerm: '顧客生涯価値の最大化', kpi: ['成約率', 'ACV（平均契約金額）', '初期CAC'] } },
+          { id: 6, title: '市場戦略', description: 'セグメント選定、市場展開、新規市場開拓', guidance: ['進出セグメントの優先度付け（市場規模×成長率×到達可能性マトリクス）', 'ジオグラフィック戦略（地域別展開計画）', '新規市場参入の段階計画と学習フェーズの設定', 'パイロット→本展開の意思決定基準を明確化'], effects: { shortTerm: 'リソース集中度向上、施策の効率化', midTerm: '新規市場への成功事例構築、スケール加速', longTerm: '事業規模の多倍化、ポートフォリオ最適化', kpi: ['新規セグメント売上比率', '市場浸透率', 'TAM拡大'] } },
+          { id: 7, title: '顧客深耕', description: '既存顧客への活動拡大と関係強化', guidance: ['既存顧客のアップセル・クロスセル機会マップ作成', '顧客サクセス体制の構築と定期接点確保', 'ロイヤルティプログラムや特典の設計', '顧客フィードバック→プロダクト改善の仕組み化'], effects: { shortTerm: '既存顧客の満足度・NPS向上', midTerm: 'アップセル売上の増加、チャーン防止', longTerm: 'LTV向上による収益性改善', kpi: ['顧客あたり年間売上増加率', 'リテンションレート', 'NRR'] } },
+          { id: 8, title: '成長戦略', description: '事業拡大の方向性と成長ドライバー', guidance: ['アンゾフマトリクス（既存×新規の掛け算）で拡大パターンを整理', 'グロースハック的アプローチ（高速検証→スケール）の導入', '成長のボトルネック特定と優先課題の決定', '3-5年の段階的な売上成長目標を設定'], effects: { shortTerm: '成長機会の明確化、実験体制の構築', midTerm: '高速グロース段階への移行', longTerm: '持続的な事業規模拡大', kpi: ['YoY成長率', 'CAC Payback Period', 'MoM成長率'] } },
+          { id: 9, title: 'マーケティング', description: 'ブランド、プロモーション、顧客獲得施策', guidance: ['ブランドポジショニング × メッセージング × クリエイティブの統一', 'チャネル別マーケティング配分（デジタル、パートナー、直販等）', 'オウンドメディア（コンテンツ）による認知 → リード生成パイプライン構築', 'CAC削減とMARR（マーケティング）ROI最大化'], effects: { shortTerm: 'ブランド認知向上、リード生成数増加', midTerm: 'セルサイクル短縮、営業効率向上', longTerm: 'ブランド資産化、顧客獲得コストの継続的削減', kpi: ['認知度', 'リード数', 'マーケティング化率（成約率）', 'CAC'] } },
+          { id: 10, title: '営業戦略', description: '営業体制、セールスプロセス、目標設定', guidance: ['セールスパイプライン標準化（ステージ定義、進捗管理）', '営業チーム体制設計（顧客層別の営業タイプ）', 'ACV別営業施策の最適化（大型案件 vs SMB）', 'Sales Coaching と実績追跡の月次実施'], effects: { shortTerm: '成約率向上、セルサイクル短縮', midTerm: '営業生産性向上（売上/営業人数）、リファレンス案件増加', longTerm: '営業組織の自走化、スケーラブルな売上成長', kpi: ['成約率', 'セルサイクル日数', 'ACV', '営業生産性（売上/FTE）'] } },
+          { id: 11, title: 'デジタル戦略', description: 'DX、データ活用、デジタルチャネル', guidance: ['デジタル化による業務効率化とコスト削減の優先順位付け', 'データ収集→分析→意思決定ループの確立', 'CRM/マーケティングオートメーション等ツール導入と運用', 'デジタル人材育成と組織横断的なデータリテラシー向上'], effects: { shortTerm: '運用効率向上、営業・マーケティング生産性向上', midTerm: 'データドリブンな意思決定の浸透', longTerm: 'デジタル競争力確立、顧客体験の継続的改善', kpi: ['プロセス自動化率', 'データ活用施策数', 'ROI'] } },
+          { id: 12, title: '提携戦略', description: 'パートナーシップ、アライアンス、M&A', guidance: ['自社では提供困難な機能・市場へのアクセス方法を検討', 'パートナー候補の評価軸（相補性、文化、利害一致度）', 'アライアンス効果の定量化と成功指標の設定', 'M&A検討時の事前評価フレームワーク（シナジー分析）'], effects: { shortTerm: '新規顧客層へのアクセス、プロダクト拡張', midTerm: 'クロスセル機会の創出、市場到達スピード向上', longTerm: '企業価値最大化、次段階への成長基盤構築', kpi: ['提携経由の売上比率', 'シナジー実現率', 'MoE'] } },
+          { id: 13, title: '検証・投資', description: '施策の検証プロセスと投資配分', guidance: ['リーン・スタートアップ流の仮説検証サイクル確立', '新施策 → MVP実装 → データ収集 → 判断の高速化', '投資判断基準の明確化（ROI、戦略適合度、リスク）', '失敗からの学習文化の醸成と施策の改善反復'], effects: { shortTerm: '施策の実行スピード向上、無駄な投資削減', midTerm: 'イノベーション機会の発掘、成功施策の早期獲得', longTerm: '市場変化への適応力向上、継続的な成長', kpi: ['検証完了時間', '成功施策率', '投資ROI'] } },
+          { id: 14, title: '顧客維持', description: 'リテンション、チャーン対策、LTV向上', guidance: ['チャーン分析：理由特定とセグメント別対策', 'カスタマーサクセス体制：プロアクティブな支援体制構築', 'リテンション指標（MRR、NRR）の月次追跡と改善', '顧客ライフサイクル別施策（オンボーディング→エンゲージメント→アドボケート）'], effects: { shortTerm: 'チャーン率低下、顧客満足度向上', midTerm: 'LTVの継続的向上、新規獲得コストの相対的低下', longTerm: '顧客ベースの安定化、赤字顧客の削減', kpi: ['チャーンレート', 'NRR（Net Revenue Retention）', 'LTV'] } },
+          { id: 15, title: '顧客価値', description: '顧客体験、サービス品質、満足度管理', guidance: ['CX監査：顧客接点別の体験品質の現状把握', 'NPS等での満足度測定と改善機会の特定', 'プロダクト × サービス × サポートの統合的UX設計', 'フィードバック→改善の部門横断的な仕組み化'], effects: { shortTerm: 'サポートコスト削減、顧客満足度向上', midTerm: 'リファレンス・紹介による新規顧客獲得', longTerm: 'ブランド価値向上、市場での口コミ効果拡大', kpi: ['NPS', 'CSAT', 'カスタマーエフォートスコア', '紹介経由売上'] } },
+          { id: 16, title: '経営思想・組織', description: 'ビジョン、ミッション、企業文化、組織体制', guidance: ['ビジョン・ミッション・バリューの設定と全社周知', 'OKR等による目標の段階化と各部門との連動', '企業文化（行動規範）の明示と採用・評価への反映', '組織体制の最適化：顧客×事業軸でのマトリクス設計検討'], effects: { shortTerm: '従業員エンゲージメント向上、離職率低下', midTerm: 'タレント獲得の加速、意思決定の高速化', longTerm: '持続的な組織力向上、企業価値向上', kpi: ['従業員エンゲージメント', '離職率', 'OKR達成率', 'eNPS'] } },
+          { id: 17, title: '経営資源', description: '人材、設備、技術、知的資産の配備', guidance: ['コア人材と必要スキルのギャップ分析', '社員教育体制の構築（オンボーディング→継続学習）', 'R&D投資の優先順位付け（既存技術改善 vs 新規開発）', '知的資産（ノウハウ、データ）の蓄積と活用体制'], effects: { shortTerm: 'チーム生産性向上、離職リスク減少', midTerm: 'イノベーション加速、競争優位性強化', longTerm: 'スケーラブルな事業基盤確立、M&A対応力向上', kpi: ['人材定着率', 'スキル充足率', 'R&D ROI', 'イノベーション指標'] } }
+        ]
+      },
+      management: {
+        title: '経営基盤・実行',
+        items: [
+          { id: 18, title: '財務戦略', description: '利益構造、キャッシュフロー、資金配分', guidance: ['アクティビティベース原価計算による製品別採算性分析', 'キャッシュフロー管理：売上債権・棚卸資産の回転効率化', '最適資本構成の検討（負債比率、コスト・オブ・キャピタル）', '予算編成→実績追跡の月次P&L管理'], effects: { shortTerm: 'キャッシュフロー改善、不採算事業の顕在化', midTerm: '利益率向上、キャッシュ効率化による成長投資余力拡大', longTerm: '企業価値最大化、投資家評価向上', kpi: ['粗利率', '営業利益率', 'FCF', 'DPO/DSO'] } },
+          { id: 19, title: '組織・人材戦略', description: 'タレント確保、育成、評価、組織設計', guidance: ['組織体制 → 必要人数・スキル要件 → 採用計画の逆算', 'リーダーシップ育成と層別教育プログラム構築', '評価制度：OKR連動型→報酬へのフィードバック', 'キャリアパス設計と組織内異動による成長機会提供'], effects: { shortTerm: '採用効率向上、オンボーディング期間短縮', midTerm: 'リーダーシップ層の充実、チーム稼働率向上', longTerm: '高パフォーマンス組織化、スケーラブルな成長', kpi: ['採用コスト', '時間', '離職率', 'OKR達成率', 'eNPS'] } },
+          { id: 20, title: 'KPI・数値計画', description: '成功指標の設定と進捗管理フレームワーク', guidance: ['SMART基準に基づくKPI設定（定量的・期限付き）', 'リーディング指標 vs ラギング指標の使い分け', 'ダッシュボード化と週次・月次レビューサイクルの確立', 'KPI達成→報酬 の連動メカニズム'], effects: { shortTerm: '進捗可視化、迅速なアクション', midTerm: 'データドリブンな意思決定の浸透', longTerm: 'PDCA回転の高速化、継続的な改善', kpi: ['KPI達成率', 'レビュー参加率', 'アクション完了率'] } },
+          { id: 21, title: '実行・ガバナンス', description: 'PDCA、意思決定プロセス、リスク管理', guidance: ['PDCA会議体の整備（営業×企画×財務の連携）', '意思決定権限の明確化と escalation プロセス', 'リスク特定→対策→監視の仕組み化', 'コンプライアンス体制と内部統制の整備'], effects: { shortTerm: '会議効率向上、意思決定スピード向上', midTerm: 'リスク顕在化の未然防止、クライシス対応力向上', longTerm: 'ガバナンス向上による投資家評価向上、事業継続性確保', kpi: ['会議効率（意思決定率）', 'リスク対応時間', 'コンプライアンス違反'] } }
+        ]
+      }
+    };
+
+    let selectedItem = 1;
+    let memos = JSON.parse(localStorage.getItem('memos') || '{}');
+
+    function renderSidebar() {
+      const html = Object.entries(strategicItems).map(([key, cat]) => `
+        <div style="margin-bottom:0.5rem;">
+          <button class="category-btn" onclick="toggleCategory('${key}')">${cat.title}</button>
+          <div id="cat-${key}" style="display:none;">
+            ${cat.items.map(item => `
+              <button class="item-btn ${selectedItem === item.id ? 'active' : ''}" onclick="selectItem(${item.id})">${item.id.toString().padStart(2,'0')} ${item.title}</button>
+            `).join('')}
+          </div>
+        </div>
+      `).join('');
+      document.getElementById('sidebar').innerHTML = html;
+    }
+
+    function toggleCategory(cat) {
+      const el = document.getElementById(`cat-${cat}`);
+      el.style.display = el.style.display === 'none' ? 'block' : 'none';
+    }
+
+    function selectItem(id) {
+      selectedItem = id;
+      renderContent();
+      renderSidebar();
+    }
+
+    function renderContent() {
+      const allItems = [...strategicItems.business.items, ...strategicItems.management.items];
+      const item = allItems.find(i => i.id === selectedItem);
+      const cat = selectedItem <= 17 ? strategicItems.business : strategicItems.management;
+      
+      const html = `
+        <div class="header-card" style="border-color:${selectedItem <= 17 ? '#2d5a8c' : '#4a5568'};">
+          <p style="font-size:0.65rem;color:${selectedItem <= 17 ? '#2d5a8c' : '#4a5568'};margin-bottom:0.4rem;">${item.id.toString().padStart(2,'0')} · ${cat.title}</p>
+          <h2 style="font-size:1.1rem;color:#0f1729;margin-bottom:0.4rem;">${item.title}</h2>
+          <p style="font-size:0.75rem;color:#4b5563;">${item.description}</p>
+        </div>
+        <div style="margin-bottom:0.6rem;">
+          <h3 style="font-size:0.95rem;margin-bottom:1rem;color:#0f1729;">実行ガイダンス</h3>
+          ${item.guidance.map(g => `<p style="font-size:0.875rem;color:#374151;margin-bottom:0.5rem;">✓ ${g}</p>`).join('')}
+        </div>
+        <div style="margin-bottom:0.6rem;">
+          <h3 style="font-size:0.95rem;margin-bottom:1rem;color:#0f1729;">期待効果</h3>
+          <p style="font-size:0.8rem;color:#4b5563;"><strong>短期:</strong> ${item.effects.shortTerm}</p>
+          <p style="font-size:0.8rem;color:#4b5563;margin-top:0.5rem;"><strong>中期:</strong> ${item.effects.midTerm}</p>
+          <p style="font-size:0.8rem;color:#4b5563;margin-top:0.5rem;"><strong>長期:</strong> ${item.effects.longTerm}</p>
+        </div>
+        <div style="margin-bottom:0.6rem;">
+          <h3 style="font-size:0.95rem;margin-bottom:1rem;color:#0f1729;">学習メモ</h3>
+          <textarea onchange="saveMemo(${item.id}, this.value)" style="background:#f9fafb;color:#0f1729;border-color:${selectedItem <= 17 ? '#2d5a8c' : '#4a5568'};">${memos[item.id] || ''}</textarea>
+        </div>
+      `;
+      document.getElementById('content').innerHTML = html;
+    }
+
+    function saveMemo(id, text) {
+      memos[id] = text;
+      localStorage.setItem('memos', JSON.stringify(memos));
+    }
+
+    renderSidebar();
+    renderContent();
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./service-worker.js').catch(() => {});
+    }
+  </script>
+</body>
+</html>
