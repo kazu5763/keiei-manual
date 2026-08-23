@@ -27,6 +27,7 @@ textarea{width:100%;padding:0.75rem;border:1px solid #d1d5db;border-radius:0.5re
 .file-item{display:flex;justify-content:space-between;align-items:center;padding:0.75rem;background:#f3f4f6;border-radius:0.5rem;font-size:0.8rem}
 .file-btn{background:none;border:none;color:#ef4444;cursor:pointer;font-weight:bold}
 .content{background:white;border-radius:0.5rem;padding:1.2rem}
+#file-input{display:none}
 @media(max-width:768px){.container{grid-template-columns:1fr}.sidebar{position:static;height:auto}}
 </style>
 </head>
@@ -48,8 +49,8 @@ textarea{width:100%;padding:0.75rem;border:1px solid #d1d5db;border-radius:0.5re
 <textarea id="memo" style="margin-bottom:1rem"></textarea>
 <h3 style="font-size:0.95rem;margin-bottom:1rem;color:#0f1729">添付ファイル</h3>
 <div id="file-list" class="file-list"></div>
-<input type="text" id="file-input" placeholder="ファイル名を入力" style="padding:0.5rem;border:1px solid #d1d5db;border-radius:0.5rem;font-size:0.8rem;margin-bottom:0.5rem;width:100%">
-<button onclick="addFile()" style="width:100%;padding:0.5rem;background:#2d5a8c;color:white;border:none;border-radius:0.5rem;cursor:pointer;font-size:0.8rem;font-weight:600">+ファイルを追加</button>
+<input type="file" id="file-input" accept="image/*">
+<button onclick="document.getElementById('file-input').click()" style="width:100%;padding:0.5rem;background:#2d5a8c;color:white;border:none;border-radius:0.5rem;cursor:pointer;font-size:0.8rem;font-weight:600">+ファイルを追加</button>
 </div>
 </div>
 </div>
@@ -93,8 +94,8 @@ function sidebar(){
 function selectItem(id){sel=id;render();sidebar()}
 function toggle(cat){const e=document.getElementById(cat);e.style.display=e.style.display==='none'?'block':'none'}
 function switchTab(t){document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.tab-content').forEach(x=>x.classList.remove('active'));event.target.classList.add('active');document.getElementById(t).classList.add('active')}
-function addFile(){const inp=document.getElementById('file-input');const nm=inp.value.trim();if(!nm)return;if(!file[sel])file[sel]=[];if(!file[sel].includes(nm)){file[sel].push(nm);inp.value='';localStorage.setItem('file',JSON.stringify(file));render()}}
 function delFile(f){file[sel]=file[sel].filter(x=>x!==f);localStorage.setItem('file',JSON.stringify(file));render()}
+document.getElementById('file-input').addEventListener('change',e=>{const f=e.target.files[0];if(f){if(!file[sel])file[sel]=[];file[sel].push(f.name);localStorage.setItem('file',JSON.stringify(file));render();e.target.value=''}});
 document.getElementById('memo').addEventListener('change',e=>{memo[sel]=e.target.value;localStorage.setItem('memo',JSON.stringify(memo))});
 memo=JSON.parse(localStorage.getItem('memo')||'{}');
 file=JSON.parse(localStorage.getItem('file')||'{}');
