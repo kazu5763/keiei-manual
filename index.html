@@ -3,35 +3,46 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>事業マニュアル</title>
+<title>事業経営フレームワーク</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f3f4f6}
-header{background:white;border-bottom:1px solid #e5e7eb;padding:1.2rem 1.5rem}
-h1{font-size:1.5rem;color:#0f1729;margin-top:0.5rem}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f8fafc}
+header{background:linear-gradient(135deg,#1e3a8a 0%,#2d5a8c 100%);padding:1.8rem 1.5rem;border-bottom:4px solid #0f172a;box-shadow:0 2px 8px rgba(0,0,0,0.1)}
+header p{font-size:0.7rem;color:#60a5fa;font-weight:700;letter-spacing:0.08em;margin-bottom:0.6rem;text-transform:uppercase}
+h1{font-size:1.8rem;color:white;font-weight:800;margin:0;letter-spacing:-0.02em}
 .container{max-width:80rem;margin:0 auto;padding:1.5rem;display:grid;grid-template-columns:160px 1fr;gap:1rem}
 .sidebar{position:sticky;top:5rem;height:80vh;overflow-y:auto}
-.category-btn{width:100%;padding:0.6rem 0.75rem;background:white;border:1px solid #e5e7eb;border-radius:0.5rem;cursor:pointer;font-weight:bold;font-size:0.7rem;margin-bottom:0.5rem;text-align:left}
-.item-btn{width:100%;padding:0.5rem 0.75rem;background:white;border:none;border-bottom:1px solid #e5e7eb;cursor:pointer;font-size:0.65rem;text-align:left}
-.item-btn.active{background:#f0f4f8;color:#2d5a8c;font-weight:600}
-.header-card{border:4px solid #2d5a8c;padding:0.9rem 1.2rem;margin-bottom:0.6rem;border-radius:0.5rem}
-.tabs{display:flex;border-bottom:1px solid #d1d5db;margin-bottom:1rem}
-.tab{flex:1;padding:0.75rem;text-align:center;cursor:pointer;font-size:0.75rem;font-weight:600;border-bottom:3px solid transparent;color:#6b7280}
-.tab.active{color:#2d5a8c;border-bottom-color:#2d5a8c}
+.category-btn{width:100%;padding:0.6rem 0.75rem;background:linear-gradient(135deg,#f0f4f8 0%,#e8f1f9 100%);border:1px solid #cbd5e1;border-radius:0.5rem;cursor:pointer;font-weight:700;font-size:0.7rem;margin-bottom:0.5rem;text-align:left;color:#1e3a8a;transition:all 0.2s}
+.category-btn:hover{background:linear-gradient(135deg,#e0e8f4 0%,#d8e9f7 100%);border-color:#2d5a8c;box-shadow:0 2px 4px rgba(45,90,140,0.1)}
+.item-btn{width:100%;padding:0.5rem 0.75rem;background:white;border:none;border-bottom:1px solid #e2e8f0;cursor:pointer;font-size:0.65rem;text-align:left;color:#334155;transition:all 0.15s}
+.item-btn:hover{background:#f1f5f9;color:#2d5a8c}
+.item-btn.active{background:linear-gradient(90deg,#dbeafe 0%,#e0f2fe 100%);color:#1e3a8a;font-weight:700;border-left:3px solid #2d5a8c}
+.header-card{border-left:5px solid #2d5a8c;background:linear-gradient(135deg,#f8fafc 0%,#f1f5f9 100%);padding:0.9rem 1.2rem;margin-bottom:0.6rem;border-radius:0.5rem;box-shadow:0 1px 3px rgba(0,0,0,0.05)}
+.header-card p:first-child{color:#2d5a8c;font-size:0.7rem;margin-bottom:0.3rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em}
+.header-card h2{color:#0f172a;font-size:1.1rem;margin:0.5rem 0}
+.header-card p:last-child{color:#64748b;font-size:0.8rem}
+.tabs{display:flex;border-bottom:2px solid #e2e8f0;margin-bottom:1rem;background:white;border-radius:0.5rem 0.5rem 0 0}
+.tab{flex:1;padding:0.75rem;text-align:center;cursor:pointer;font-size:0.75rem;font-weight:600;border-bottom:3px solid transparent;color:#64748b;transition:all 0.2s}
+.tab:hover{color:#2d5a8c;background:#f8fafc}
+.tab.active{color:#2d5a8c;border-bottom-color:#2d5a8c;background:white}
 .tab-content{display:none}
 .tab-content.active{display:block}
-.guidance-item{display:flex;gap:0.75rem;padding:0.75rem;background:#f9fafb;border:1px solid #e5e7eb;border-radius:0.5rem;margin-bottom:0.5rem}
-.guidance-icon{width:20px;height:20px;border-radius:50%;background:#2d5a8c;color:white;display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:bold;flex-shrink:0}
-textarea{width:100%;padding:0.75rem;border:1px solid #d1d5db;border-radius:0.5rem;font-size:0.8rem;font-family:inherit;height:5rem;color:#0f1729;background:#f9fafb}
+.guidance-item{display:flex;gap:0.75rem;padding:0.75rem;background:linear-gradient(135deg,#f0f9ff 0%,#f0f4f8 100%);border-left:3px solid #0284c7;border-radius:0.5rem;margin-bottom:0.5rem}
+.guidance-icon{width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,#2d5a8c 0%,#1e3a8a 100%);color:white;display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:bold;flex-shrink:0}
+textarea{width:100%;padding:0.75rem;border:2px solid #e2e8f0;border-radius:0.5rem;font-size:0.8rem;font-family:inherit;height:5rem;color:#0f172a;background:white;transition:border-color 0.2s}
+textarea:focus{outline:none;border-color:#2d5a8c;box-shadow:0 0 0 3px rgba(45,90,140,0.1)}
 .file-list{display:flex;flex-direction:column;gap:0.5rem;margin-bottom:1rem}
-.file-item{display:flex;justify-content:space-between;align-items:center;padding:0.75rem;background:#f3f4f6;border-radius:0.5rem;font-size:0.8rem}
-.file-btn{background:none;border:none;color:#ef4444;cursor:pointer;font-weight:bold}
-.content{background:white;border-radius:0.5rem;padding:1.2rem}
+.file-item{display:flex;justify-content:space-between;align-items:center;padding:0.75rem;background:linear-gradient(135deg,#f0f4f8 0%,#e8f1f9 100%);border-radius:0.5rem;font-size:0.8rem;border:1px solid #cbd5e1}
+.file-link{color:#2d5a8c;text-decoration:none;cursor:pointer;font-weight:600;flex:1;transition:color 0.2s}
+.file-link:hover{color:#1e3a8a;text-decoration:underline}
+.file-btn{background:none;border:none;color:#dc2626;cursor:pointer;font-weight:bold;transition:color 0.2s}
+.file-btn:hover{color:#991b1b}
+.content{background:white;border-radius:0.5rem;padding:1.2rem;box-shadow:0 1px 3px rgba(0,0,0,0.05)}
 @media(max-width:768px){.container{grid-template-columns:1fr}.sidebar{position:static;height:auto}}
 </style>
 </head>
 <body>
-<header><p style="font-size:0.65rem;color:#9ca3af">BUSINESS STRATEGY</p><h1>事業マニュアル</h1></header>
+<header><p>Business Management Framework</p><h1>事業経営フレームワーク</h1></header>
 <div class="container">
 <div class="sidebar" id="sidebar"></div>
 <div class="content">
@@ -44,12 +55,12 @@ textarea{width:100%;padding:0.75rem;border:1px solid #d1d5db;border-radius:0.5re
 <div id="guidance" class="tab-content active"></div>
 <div id="effects" class="tab-content"></div>
 <div id="resources" class="tab-content">
-<h3 style="font-size:0.95rem;margin-bottom:1rem;color:#0f1729">学習メモ</h3>
+<h3 style="font-size:0.95rem;margin-bottom:1rem;color:#0f172a">学習メモ</h3>
 <textarea id="memo" style="margin-bottom:1rem"></textarea>
-<h3 style="font-size:0.95rem;margin-bottom:1rem;color:#0f1729">添付ファイル</h3>
+<h3 style="font-size:0.95rem;margin-bottom:1rem;color:#0f172a">添付ファイル</h3>
 <div id="file-list" class="file-list"></div>
-<input type="file" id="file-input" style="padding:0.5rem;border:1px solid #d1d5db;border-radius:0.5rem;font-size:0.8rem;margin-bottom:0.5rem;width:100%;display:block">
-<button onclick="addFile()" style="width:100%;padding:0.5rem;background:#2d5a8c;color:white;border:none;border-radius:0.5rem;cursor:pointer;font-size:0.8rem;font-weight:600">+ファイルを追加</button>
+<input type="file" id="file-input" style="padding:0.5rem;border:2px solid #e2e8f0;border-radius:0.5rem;font-size:0.8rem;margin-bottom:0.5rem;width:100%;display:block">
+<button onclick="addFile()" style="width:100%;padding:0.5rem;background:linear-gradient(135deg,#2d5a8c 0%,#1e3a8a 100%);color:white;border:none;border-radius:0.5rem;cursor:pointer;font-size:0.8rem;font-weight:700;transition:all 0.2s;box-shadow:0 2px 4px rgba(45,90,140,0.2)">+ファイルを追加</button>
 </div>
 </div>
 </div>
@@ -80,11 +91,11 @@ const items=[
 let sel=1,memo={},file={};
 function render(){
   const item=items.find(i=>i.id===sel);
-  document.getElementById('header-card').innerHTML=`<p style="color:#2d5a8c;font-size:0.7rem;margin-bottom:0.3rem">${String(sel).padStart(2,'0')} · ${item.cat}</p><h2 style="color:#0f1729;font-size:1.1rem;margin:0.5rem 0">${item.title}</h2><p style="color:#666;font-size:0.8rem">${item.desc}</p>`;
-  document.getElementById('guidance').innerHTML=`<h3 style="color:#0f1729;font-size:0.95rem;margin-bottom:1rem">実行ガイダンス</h3>${item.guidance.map(g=>`<div class="guidance-item"><div class="guidance-icon">✓</div><p style="font-size:0.875rem;color:#374151;margin:0">${g}</p></div>`).join('')}`;
-  document.getElementById('effects').innerHTML=`<h3 style="color:#0f1729;font-size:0.95rem;margin-bottom:1rem">期待効果</h3><div style="padding:0.75rem;background:#f9fafb;border-radius:0.5rem;border:1px solid #e5e7eb;margin-bottom:0.75rem"><p style="color:#0f1729;font-size:0.8rem;font-weight:bold;margin-bottom:0.3rem">短期</p><p style="color:#666;font-size:0.8rem;margin:0">${item.short}</p></div><div style="padding:0.75rem;background:#f9fafb;border-radius:0.5rem;border:1px solid #e5e7eb;margin-bottom:0.75rem"><p style="color:#0f1729;font-size:0.8rem;font-weight:bold;margin-bottom:0.3rem">中期</p><p style="color:#666;font-size:0.8rem;margin:0">${item.mid}</p></div><div style="padding:0.75rem;background:#f9fafb;border-radius:0.5rem;border:1px solid #e5e7eb"><p style="color:#0f1729;font-size:0.8rem;font-weight:bold;margin-bottom:0.3rem">長期</p><p style="color:#666;font-size:0.8rem;margin:0">${item.long}</p></div>`;
+  document.getElementById('header-card').innerHTML=`<p style="color:#2d5a8c;font-size:0.7rem;margin-bottom:0.3rem">${String(sel).padStart(2,'0')} · ${item.cat}</p><h2 style="color:#0f172a;font-size:1.1rem;margin:0.5rem 0">${item.title}</h2><p style="color:#64748b;font-size:0.8rem">${item.desc}</p>`;
+  document.getElementById('guidance').innerHTML=`<h3 style="color:#0f172a;font-size:0.95rem;margin-bottom:1rem">実行ガイダンス</h3>${item.guidance.map(g=>`<div class="guidance-item"><div class="guidance-icon">✓</div><p style="font-size:0.875rem;color:#1e293b;margin:0">${g}</p></div>`).join('')}`;
+  document.getElementById('effects').innerHTML=`<h3 style="color:#0f172a;font-size:0.95rem;margin-bottom:1rem">期待効果</h3><div style="padding:0.75rem;background:linear-gradient(135deg,#f0f9ff 0%,#f0f4f8 100%);border-radius:0.5rem;border:1px solid #cbd5e1;margin-bottom:0.75rem"><p style="color:#0f172a;font-size:0.8rem;font-weight:bold;margin-bottom:0.3rem">短期</p><p style="color:#475569;font-size:0.8rem;margin:0">${item.short}</p></div><div style="padding:0.75rem;background:linear-gradient(135deg,#f0f9ff 0%,#f0f4f8 100%);border-radius:0.5rem;border:1px solid #cbd5e1;margin-bottom:0.75rem"><p style="color:#0f172a;font-size:0.8rem;font-weight:bold;margin-bottom:0.3rem">中期</p><p style="color:#475569;font-size:0.8rem;margin:0">${item.mid}</p></div><div style="padding:0.75rem;background:linear-gradient(135deg,#f0f9ff 0%,#f0f4f8 100%);border-radius:0.5rem;border:1px solid #cbd5e1"><p style="color:#0f172a;font-size:0.8rem;font-weight:bold;margin-bottom:0.3rem">長期</p><p style="color:#475569;font-size:0.8rem;margin:0">${item.long}</p></div>`;
   document.getElementById('memo').value=memo[sel]||'';
-  const list=document.getElementById('file-list');list.innerHTML=(file[sel]||[]).map(f=>`<div class="file-item"><span>${f}</span><button class="file-btn" onclick="delFile('${f}')">削除</button></div>`).join('');
+  const list=document.getElementById('file-list');list.innerHTML=(file[sel]||[]).map((f,i)=>`<div class="file-item"><a href="${f.data}" download="${f.name}" class="file-link">${f.name}</a><button class="file-btn" onclick="delFile(${i})">削除</button></div>`).join('');
 }
 function sidebar(){
   const bus=items.filter(i=>i.id<=17);const mng=items.filter(i=>i.id>17);
@@ -93,8 +104,8 @@ function sidebar(){
 function selectItem(id){sel=id;render();sidebar()}
 function toggle(cat){const e=document.getElementById(cat);e.style.display=e.style.display==='none'?'block':'none'}
 function switchTab(t){document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.tab-content').forEach(x=>x.classList.remove('active'));event.target.classList.add('active');document.getElementById(t).classList.add('active')}
-function addFile(){const inp=document.getElementById('file-input');if(!inp.files[0])return;const nm=inp.files[0].name;if(!file[sel])file[sel]=[];if(!file[sel].includes(nm)){file[sel].push(nm);inp.value='';localStorage.setItem('file',JSON.stringify(file));render()}}
-function delFile(f){file[sel]=file[sel].filter(x=>x!==f);localStorage.setItem('file',JSON.stringify(file));render()}
+function addFile(){const inp=document.getElementById('file-input');if(!inp.files[0])return;const f=inp.files[0];const reader=new FileReader();reader.onload=e=>{if(!file[sel])file[sel]=[];file[sel].push({name:f.name,data:e.target.result});inp.value='';localStorage.setItem('file',JSON.stringify(file));render()};reader.readAsDataURL(f)}
+function delFile(i){file[sel].splice(i,1);localStorage.setItem('file',JSON.stringify(file));render()}
 document.getElementById('memo').addEventListener('change',e=>{memo[sel]=e.target.value;localStorage.setItem('memo',JSON.stringify(memo))});
 memo=JSON.parse(localStorage.getItem('memo')||'{}');
 file=JSON.parse(localStorage.getItem('file')||'{}');
