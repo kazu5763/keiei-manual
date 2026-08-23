@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#2d5a8c" />
+    <meta name="description" content="21の戦略要素による体系的な事業運営マニュアル。AI アシスタント付き。" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="事業マニュアル" />
+    
+    <link rel="manifest" href="./manifest.json" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%232d5a8c' width='192' height='192'/><text x='50%' y='50%' font-size='80' font-weight='bold' fill='white' text-anchor='middle' dominant-baseline='middle' font-family='system-ui'>事</text></svg>" />
+    
+    <title>事業マニュアル</title>
+    
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    
+    <script type="module">
+      import React from 'https://esm.sh/react@18.2.0';
+      import ReactDOM from 'https://esm.sh/react-dom@18.2.0/client';
+      
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('./service-worker.js')
+            .then((registration) => {
+              console.log('Service Worker 登録成功:', registration);
+            })
+            .catch((error) => {
+              console.log('Service Worker 登録失敗:', error);
+            });
+        });
+      }
+
+      import('./keiei-plan-refined.jsx').then((module) => {
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(React.createElement(module.default));
+      });
+    </script>
+  </body>
+</html>
