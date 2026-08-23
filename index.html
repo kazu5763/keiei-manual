@@ -28,7 +28,6 @@
     .file-list { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1rem; }
     .file-item { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem; background: #f3f4f6; border-radius: 0.5rem; font-size: 0.8rem; }
     .file-btn { background: none; border: none; color: #ef4444; cursor: pointer; font-weight: bold; }
-    .add-file-btn { padding: 0.5rem 1rem; background: #2d5a8c; color: white; border: none; border-radius: 0.5rem; cursor: pointer; font-size: 0.8rem; font-weight: 600; }
     .content { background: white; border-radius: 0.5rem; padding: 1.2rem; }
     @media (max-width: 768px) { .container { grid-template-columns: 1fr; } .sidebar { position: static; height: auto; } }
   </style>
@@ -54,8 +53,8 @@
         <textarea id="memo" style="margin-bottom: 1rem;"></textarea>
         <h3 style="font-size: 0.95rem; margin-bottom: 1rem; color: #0f1729;">添付ファイル</h3>
         <div class="file-list" id="file-list"></div>
-        <input type="text" id="file-input" placeholder="ファイル名を入力" style="padding: 0.5rem; border: 1px solid #d1d5db; border-radius: 0.5rem; font-size: 0.8rem; margin-bottom: 0.5rem; width: 100%;">
-        <button class="add-file-btn" onclick="addFile()">+ ファイルを追加</button>
+        <input type="text" id="file-input" placeholder="ファイル名を入力" style="padding: 0.5rem; border: 1px solid #d1d5db; border-radius: 0.5rem; font-size: 0.8rem; margin-bottom: 0.5rem; width: 100%; display: block;">
+        <button id="add-btn" style="width: 100%; padding: 0.5rem 1rem; background: #2d5a8c; color: white; border: none; border-radius: 0.5rem; cursor: pointer; font-size: 0.8rem; font-weight: 600;">+ ファイルを追加</button>
       </div>
     </div>
   </div>
@@ -88,81 +87,4 @@
         items: [
           { id: 18, title: '財務戦略', description: '利益構造、キャッシュフロー、資金配分', guidance: ['アクティビティベース原価計算による製品別採算性分析', 'キャッシュフロー管理：売上債権・棚卸資産の回転効率化', '最適資本構成の検討（負債比率、コスト・オブ・キャピタル）', '予算編成→実績追跡の月次P&L管理'], effects: { shortTerm: 'キャッシュフロー改善、不採算事業の顕在化', midTerm: '利益率向上、キャッシュ効率化による成長投資余力拡大', longTerm: '企業価値最大化、投資家評価向上' } },
           { id: 19, title: '組織・人材戦略', description: 'タレント確保、育成、評価、組織設計', guidance: ['組織体制 → 必要人数・スキル要件 → 採用計画の逆算', 'リーダーシップ育成と層別教育プログラム構築', '評価制度：OKR連動型→報酬へのフィードバック', 'キャリアパス設計と組織内異動による成長機会提供'], effects: { shortTerm: '採用効率向上、オンボーディング期間短縮', midTerm: 'リーダーシップ層の充実、チーム稼働率向上', longTerm: '高パフォーマンス組織化、スケーラブルな成長' } },
-          { id: 20, title: 'KPI・数値計画', description: '成功指標の設定と進捗管理フレームワーク', guidance: ['SMART基準に基づくKPI設定（定量的・期限付き）', 'リーディング指標 vs ラギング指標の使い分け', 'ダッシュボード化と週次・月次レビューサイクルの確立', 'KPI達成→報酬 の連動メカニズム'], effects: { shortTerm: '進捗可視化、迅速なアクション', midTerm: 'データドリブンな意思決定の浸透', longTerm: 'PDCA回転の高速化、継続的な改善' } },
-          { id: 21, title: '実行・ガバナンス', description: 'PDCA、意思決定プロセス、リスク管理', guidance: ['PDCA会議体の整備（営業×企画×財務の連携）', '意思決定権限の明確化と escalation プロセス', 'リスク特定→対策→監視の仕組み化', 'コンプライアンス体制と内部統制の整備'], effects: { shortTerm: '会議効率向上、意思決定スピード向上', midTerm: 'リスク顕在化の未然防止、クライシス対応力向上', longTerm: 'ガバナンス向上による投資家評価向上、事業継続性確保' } }
-        ]
-      }
-    };
-    let selectedItem = 1;
-    let memos = JSON.parse(localStorage.getItem('memos') || '{}');
-    let files = JSON.parse(localStorage.getItem('files') || '{}');
-    function renderSidebar() {
-      const html = Object.entries(strategicItems).map(([key, cat]) => `<div style="margin-bottom:0.5rem;"><button class="category-btn" onclick="toggleCategory('${key}')">${cat.title}</button><div id="cat-${key}" style="display:${key === 'business' ? 'block' : 'none'};">${cat.items.map(item => `<button class="item-btn ${selectedItem === item.id ? 'active' : ''}" onclick="selectItem(${item.id})">${item.id.toString().padStart(2,'0')} ${item.title}</button>`).join('')}</div></div>`).join('');
-      document.getElementById('sidebar').innerHTML = html;
-    }
-    function toggleCategory(cat) {
-      const el = document.getElementById(`cat-${cat}`);
-      el.style.display = el.style.display === 'none' ? 'block' : 'none';
-    }
-    function selectItem(id) {
-      selectedItem = id;
-      renderContent();
-      renderSidebar();
-    }
-    function renderContent() {
-      const allItems = [...strategicItems.business.items, ...strategicItems.management.items];
-      const item = allItems.find(i => i.id === selectedItem);
-      const cat = selectedItem <= 17 ? strategicItems.business : strategicItems.management;
-      const catColor = selectedItem <= 17 ? '#2d5a8c' : '#4a5568';
-      document.getElementById('header-card').innerHTML = `<p style="font-size:0.65rem;color:${catColor};margin-bottom:0.4rem;">${item.id.toString().padStart(2,'0')} · ${cat.title}</p><h2 style="font-size:1.1rem;color:#0f1729;margin-bottom:0.4rem;">${item.title}</h2><p style="font-size:0.75rem;color:#4b5563;">${item.description}</p>`;
-      document.getElementById('guidance').innerHTML = `<h3 style="font-size:0.95rem;margin-bottom:1rem;color:#0f1729;">実行ガイダンス</h3>${item.guidance.map(g => `<div class="guidance-item"><div class="guidance-icon">✓</div><p style="font-size:0.875rem;color:#374151;">${g}</p></div>`).join('')}`;
-      document.getElementById('effects').innerHTML = `<h3 style="font-size:0.95rem;margin-bottom:1rem;color:#0f1729;">期待効果</h3><div style="margin-bottom:0.75rem;padding:0.75rem;background:#f9fafb;border-radius:0.5rem;border:1px solid #e5e7eb;"><p style="font-size:0.8rem;font-weight:bold;color:#0f1729;margin-bottom:0.3rem;">短期効果（1-3ヶ月）</p><p style="font-size:0.8rem;color:#4b5563;">${item.effects.shortTerm}</p></div><div style="margin-bottom:0.75rem;padding:0.75rem;background:#f9fafb;border-radius:0.5rem;border:1px solid #e5e7eb;"><p style="font-size:0.8rem;font-weight:bold;color:#0f1729;margin-bottom:0.3rem;">中期効果（3-12ヶ月）</p><p style="font-size:0.8rem;color:#4b5563;">${item.effects.midTerm}</p></div><div style="padding:0.75rem;background:#f9fafb;border-radius:0.5rem;border:1px solid #e5e7eb;"><p style="font-size:0.8rem;font-weight:bold;color:#0f1729;margin-bottom:0.3rem;">長期効果（1年以上）</p><p style="font-size:0.8rem;color:#4b5563;">${item.effects.longTerm}</p></div>`;
-      updateMemo();
-      updateFileList();
-    }
-    function updateMemo() {
-      const memo = document.getElementById('memo');
-      memo.value = memos[selectedItem] || '';
-      memo.onchange = () => {
-        memos[selectedItem] = memo.value;
-        localStorage.setItem('memos', JSON.stringify(memos));
-      };
-    }
-    function updateFileList() {
-      const fileList = document.getElementById('file-list');
-      const itemFiles = files[selectedItem] || [];
-      fileList.innerHTML = itemFiles.map(f => `<div class="file-item"><span>${f}</span><button class="file-btn" onclick="deleteFile('${f}')">削除</button></div>`).join('');
-    }
-    function addFile() {
-      const input = document.getElementById('file-input');
-      const fileName = input.value.trim();
-      if (!fileName) return;
-      if (!files[selectedItem]) files[selectedItem] = [];
-      if (!files[selectedItem].includes(fileName)) {
-        files[selectedItem].push(fileName);
-        localStorage.setItem('files', JSON.stringify(files));
-        input.value = '';
-        updateFileList();
-      }
-    }
-    function deleteFile(fileName) {
-      if (files[selectedItem]) {
-        files[selectedItem] = files[selectedItem].filter(f => f !== fileName);
-        localStorage.setItem('files', JSON.stringify(files));
-        updateFileList();
-      }
-    }
-    function switchTab(tab) {
-      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-      event.target.classList.add('active');
-      document.getElementById(tab).classList.add('active');
-    }
-    renderSidebar();
-    renderContent();
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./service-worker.js').catch(() => {});
-    }
-  </script>
-</body>
-</html>
+          { id: 20, title: 'KPI・数値計画', description: '成功指標の設定と進捗管理フレームワーク', guidance:
