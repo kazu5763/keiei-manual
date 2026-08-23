@@ -218,4 +218,401 @@ const KeiiPlanRefined = () => {
                   </button>
 
                   {expandedCategory === key && (
-                    <div style={{
+                    <div style={{ backgroundColor: '#fafbfc', borderTop: '1px solid #e5e7eb' }}>
+                      {category.items.map((item) => (
+                        <button
+                          key={item.id}
+                          onClick={() => {
+                            setSelectedItem(item.id);
+                            setActiveTab('guidance');
+                          }}
+                          style={{
+                            width: '100%',
+                            padding: '0.5rem 0.75rem',
+                            textAlign: 'left',
+                            fontSize: '0.65rem',
+                            border: 'none',
+                            backgroundColor: selectedItem === item.id ? '#f0f4f8' : '#ffffff',
+                            color: selectedItem === item.id ? category.accent : '#4b5563',
+                            fontWeight: selectedItem === item.id ? '600' : '400',
+                            cursor: 'pointer',
+                            borderBottom: '1px solid #e5e7eb',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '0.4rem'
+                          }}
+                        >
+                          <span style={{ fontSize: '0.6rem', fontWeight: 'bold', color: category.accent, width: '20px' }}>
+                            {String(item.id).padStart(2, '0')}
+                          </span>
+                          <span>{item.title}</span>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Main Content */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+            {currentItem && (
+              <>
+                {/* Header Card */}
+                <div
+                  style={{
+                    backgroundColor: '#ffffff',
+                    border: `4px solid ${strategicItems[currentCategory].accent}`,
+                    borderRadius: '0.5rem',
+                    padding: '0.9rem 1.2rem'
+                  }}
+                >
+                  <p style={{ fontSize: '0.65rem', fontWeight: 'bold', color: strategicItems[currentCategory].accent, letterSpacing: '0.05em', marginBottom: '0.4rem' }}>
+                    {String(currentItem.id).padStart(2, '0')} · {strategicItems[currentCategory].title}
+                  </p>
+                  <h1 style={{ fontSize: '1.1rem', fontWeight: 900, color: '#0f1729', marginBottom: '0.4rem' }}>
+                    {currentItem.title}
+                  </h1>
+                  <p style={{ fontSize: '0.75rem', color: '#4b5563', lineHeight: 1.4 }}>
+                    {currentItem.description}
+                  </p>
+                </div>
+
+                {/* Tabs */}
+                <div style={{ display: 'flex', borderBottom: '1px solid #d1d5db', backgroundColor: '#ffffff' }}>
+                  {['guidance', 'effects', 'learning'].map(tab => (
+                    <button
+                      key={tab}
+                      onClick={() => setActiveTab(tab)}
+                      style={{
+                        padding: '0.5rem 0.8rem',
+                        fontWeight: '600',
+                        fontSize: '0.65rem',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.05em',
+                        border: 'none',
+                        backgroundColor: 'transparent',
+                        borderBottom: `2px solid ${
+                          activeTab === tab ? strategicItems[currentCategory].accent : 'transparent'
+                        }`,
+                        color: activeTab === tab ? strategicItems[currentCategory].accent : '#9ca3af',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s'
+                      }}
+                    >
+                      {tab === 'guidance' ? '実行ガイダンス' : tab === 'effects' ? '期待効果' : '学習リソース'}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Content */}
+                <div style={{ backgroundColor: '#ffffff', border: '1px solid #e5e7eb', borderRadius: '0.5rem', padding: '1.2rem' }}>
+                  {activeTab === 'guidance' && (
+                    <div>
+                      <h3 style={{ fontSize: '0.95rem', fontWeight: 'bold', marginBottom: '1rem', color: '#0f1729' }}>
+                        実行する際に押さえるべきポイント
+                      </h3>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                        {currentItem.guidance.map((point, idx) => (
+                          <div
+                            key={idx}
+                            style={{
+                              display: 'flex',
+                              gap: '0.75rem',
+                              padding: '0.75rem',
+                              backgroundColor: '#f9fafb',
+                              border: '1px solid #e5e7eb',
+                              borderRadius: '0.5rem'
+                            }}
+                          >
+                            <div
+                              style={{
+                                width: '20px',
+                                height: '20px',
+                                borderRadius: '50%',
+                                backgroundColor: strategicItems[currentCategory].accent,
+                                color: '#ffffff',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                fontSize: '0.65rem',
+                                fontWeight: 'bold',
+                                flexShrink: 0
+                              }}
+                            >
+                              ✓
+                            </div>
+                            <p style={{ fontSize: '0.875rem', color: '#374151', lineHeight: 1.6 }}>
+                              {point}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {activeTab === 'effects' && (
+                    <div>
+                      <h3 style={{ fontSize: '0.95rem', fontWeight: 'bold', marginBottom: '1rem', color: '#0f1729' }}>
+                        期待できる効果
+                      </h3>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                        {[
+                          { label: '短期効果（1-3ヶ月）', value: currentItem.effects.shortTerm },
+                          { label: '中期効果（3-12ヶ月）', value: currentItem.effects.midTerm },
+                          { label: '長期効果（1年以上）', value: currentItem.effects.longTerm }
+                        ].map((effect, idx) => (
+                          <div
+                            key={idx}
+                            style={{
+                              padding: '0.75rem',
+                              backgroundColor: '#fafbfc',
+                              border: '1px solid #d1d5db',
+                              borderRadius: '0.5rem'
+                            }}
+                          >
+                            <h4 style={{ fontSize: '0.75rem', fontWeight: 'bold', marginBottom: '0.3rem', color: '#0f1729' }}>
+                              {effect.label}
+                            </h4>
+                            <p style={{ fontSize: '0.8rem', color: '#4b5563' }}>
+                              {effect.value}
+                            </p>
+                          </div>
+                        ))}
+                        <div style={{ padding: '0.75rem', backgroundColor: '#f9fafb', border: '1px solid #d1d5db', borderRadius: '0.5rem' }}>
+                          <h4 style={{ fontSize: '0.75rem', fontWeight: 'bold', marginBottom: '0.5rem', color: '#0f1729' }}>
+                            主要なKPI
+                          </h4>
+                          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                            {currentItem.effects.kpi.map((kpi, idx) => (
+                              <span
+                                key={idx}
+                                style={{
+                                  fontSize: '0.75rem',
+                                  fontWeight: '500',
+                                  padding: '0.25rem 0.75rem',
+                                  backgroundColor: '#e5e7eb',
+                                  color: '#374151',
+                                  borderRadius: '9999px'
+                                }}
+                              >
+                                {kpi}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {activeTab === 'learning' && (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                      <h3 style={{ fontSize: '0.95rem', fontWeight: 'bold', color: '#0f1729' }}>
+                        学習リソース
+                      </h3>
+                      <div style={{ padding: '1.5rem', backgroundColor: '#f9fafb', border: '2px dashed #d1d5db', borderRadius: '0.5rem', textAlign: 'center' }}>
+                        <p style={{ fontSize: '0.8rem', color: '#6b7280', marginBottom: '0.75rem' }}>
+                          関連資料、参考書籍、フレームワークテンプレートをここに追加できます
+                        </p>
+                        <div style={{ display: 'flex', gap: '0.5rem' }}>
+                          <button
+                            style={{
+                              flex: 1,
+                              padding: '0.6rem',
+                              fontSize: '0.75rem',
+                              fontWeight: '600',
+                              backgroundColor: strategicItems[currentCategory].accent,
+                              color: '#ffffff',
+                              border: 'none',
+                              borderRadius: '0.5rem',
+                              cursor: 'pointer'
+                            }}
+                          >
+                            ファイルを追加
+                          </button>
+                          <button
+                            style={{
+                              flex: 1,
+                              padding: '0.6rem',
+                              fontSize: '0.75rem',
+                              fontWeight: '600',
+                              backgroundColor: '#e5e7eb',
+                              color: '#374151',
+                              border: 'none',
+                              borderRadius: '0.5rem',
+                              cursor: 'pointer'
+                            }}
+                          >
+                            参考リンクを追加
+                          </button>
+                        </div>
+                      </div>
+                      <textarea
+                        value={memos[currentItem.id] || ''}
+                        onChange={(e) => saveMemo(currentItem.id, e.target.value)}
+                        placeholder="学習メモ、実装時の気付き、カスタマイズ内容などを記入してください"
+                        style={{
+                          width: '100%',
+                          height: '5rem',
+                          padding: '0.75rem',
+                          fontSize: '0.8rem',
+                          border: '1px solid #d1d5db',
+                          borderRadius: '0.5rem',
+                          color: '#0f1729',
+                          backgroundColor: '#f9fafb',
+                          fontFamily: 'inherit',
+                          resize: 'none',
+                          outline: 'none'
+                        }}
+                        onFocus={(e) => { e.target.style.borderColor = strategicItems[currentCategory].accent; e.target.style.backgroundColor = '#ffffff'; }}
+                        onBlur={(e) => { e.target.style.borderColor = '#d1d5db'; e.target.style.backgroundColor = '#f9fafb'; }}
+                      />
+                    </div>
+                  )}
+                </div>
+
+                {/* AI Chat */}
+                <div style={{ backgroundColor: '#ffffff', border: '1px solid #e5e7eb', borderRadius: '0.5rem', overflow: 'hidden', display: 'flex', flexDirection: 'column', height: '350px' }}>
+                  <div style={{ padding: '0.75rem 1rem', backgroundColor: '#fafbfc', borderBottom: '1px solid #e5e7eb' }}>
+                    <h4 style={{ fontSize: '0.8rem', fontWeight: 'bold', color: '#0f1729', marginBottom: '0.2rem' }}>
+                      💡 AI アシスタント
+                    </h4>
+                    <p style={{ fontSize: '0.7rem', color: '#6b7280' }}>
+                      「{currentItem.title}」について質問できます
+                    </p>
+                  </div>
+
+                  <div style={{ flex: 1, overflowY: 'auto', padding: '0.75rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                    {chatMessages.length === 0 ? (
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
+                        <p style={{ fontSize: '0.7rem', color: '#9ca3af', textAlign: 'center', padding: '0 1rem' }}>
+                          API キーを設定して質問を入力すると、AI がアドバイスします
+                        </p>
+                      </div>
+                    ) : (
+                      <>
+                        {chatMessages.map((msg, idx) => (
+                          <div
+                            key={idx}
+                            style={{
+                              display: 'flex',
+                              justifyContent: msg.role === 'user' ? 'flex-end' : 'flex-start'
+                            }}
+                          >
+                            <div
+                              style={{
+                                maxWidth: '80%',
+                                padding: '0.6rem 0.75rem',
+                                borderRadius: '0.5rem',
+                                fontSize: '0.75rem',
+                                backgroundColor: msg.role === 'user' ? strategicItems[currentCategory].accent : '#f3f4f6',
+                                color: msg.role === 'user' ? '#ffffff' : '#0f1729',
+                                wordWrap: 'break-word',
+                                lineHeight: 1.4
+                              }}
+                            >
+                              {msg.content}
+                            </div>
+                          </div>
+                        ))}
+                        {isLoading && (
+                          <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+                            <div style={{ padding: '0.6rem 0.75rem', backgroundColor: '#f3f4f6', borderRadius: '0.5rem', fontSize: '0.7rem', color: '#6b7280' }}>
+                              入力中...
+                            </div>
+                          </div>
+                        )}
+                        <div ref={chatEndRef} />
+                      </>
+                    )}
+                  </div>
+
+                  <div style={{ borderTop: '1px solid #e5e7eb', padding: '0.6rem' }}>
+                    {!apiKey && (
+                      <button
+                        onClick={() => setShowApiInput(!showApiInput)}
+                        style={{
+                          width: '100%',
+                          padding: '0.5rem',
+                          fontSize: '0.7rem',
+                          backgroundColor: '#e5e7eb',
+                          color: '#374151',
+                          border: 'none',
+                          borderRadius: '0.5rem',
+                          cursor: 'pointer',
+                          marginBottom: '0.4rem'
+                        }}
+                      >
+                        {showApiInput ? 'キャンセル' : 'API キーを設定'}
+                      </button>
+                    )}
+                    {showApiInput && (
+                      <input
+                        type="password"
+                        placeholder="Anthropic API キー"
+                        value={apiKey}
+                        onChange={(e) => saveApiKey(e.target.value)}
+                        style={{
+                          width: '100%',
+                          padding: '0.5rem',
+                          fontSize: '0.7rem',
+                          border: '1px solid #d1d5db',
+                          borderRadius: '0.5rem',
+                          marginBottom: '0.4rem',
+                          outline: 'none',
+                          fontFamily: 'monospace'
+                        }}
+                      />
+                    )}
+                    <form onSubmit={handleSendMessage} style={{ display: 'flex', gap: '0.4rem' }}>
+                      <input
+                        type="text"
+                        value={chatInput}
+                        onChange={(e) => setChatInput(e.target.value)}
+                        placeholder="質問を入力..."
+                        disabled={isLoading || !apiKey}
+                        style={{
+                          flex: 1,
+                          padding: '0.5rem 0.6rem',
+                          fontSize: '0.75rem',
+                          border: '1px solid #d1d5db',
+                          borderRadius: '0.5rem',
+                          backgroundColor: '#f9fafb',
+                          color: '#0f1729',
+                          outline: 'none',
+                          opacity: isLoading || !apiKey ? 0.6 : 1
+                        }}
+                        onFocus={(e) => { e.target.style.borderColor = strategicItems[currentCategory].accent; e.target.style.backgroundColor = '#ffffff'; }}
+                        onBlur={(e) => { e.target.style.borderColor = '#d1d5db'; e.target.style.backgroundColor = '#f9fafb'; }}
+                      />
+                      <button
+                        type="submit"
+                        disabled={isLoading || !chatInput.trim() || !apiKey}
+                        style={{
+                          padding: '0.5rem 0.65rem',
+                          fontSize: '0.7rem',
+                          fontWeight: '600',
+                          backgroundColor: strategicItems[currentCategory].accent,
+                          color: '#ffffff',
+                          border: 'none',
+                          borderRadius: '0.5rem',
+                          cursor: 'pointer',
+                          opacity: isLoading || !chatInput.trim() || !apiKey ? 0.6 : 1
+                        }}
+                      >
+                        送信
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default KeiiPlanRefined;
